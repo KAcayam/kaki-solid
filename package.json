@@ -1,0 +1,31 @@
+{
+  "name": "kaki-solid",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"panda codegen --watch\" \"vinxi dev\"",
+    "build": "vinxi build",
+    "start": "vinxi start",
+    "version": "vinxi version"
+  },
+  "dependencies": {
+    "@ark-ui/solid": "^5.30.0",
+    "@solidjs/meta": "^0.29.4",
+    "@solidjs/router": "^0.15.0",
+    "@solidjs/start": "^1.1.0",
+    "class-variance-authority": "^0.7.1",
+    "lucide-solid": "^0.563.0",
+    "solid-js": "^1.9.5",
+    "vinxi": "^0.5.7"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@pandacss/dev": "^1.8.1",
+    "@park-ui/panda-preset": "^0.43.1",
+    "@types/node": "^25.0.10",
+    "autoprefixer": "^10.4.23",
+    "concurrently": "^9.2.1",
+    "postcss": "^8.5.6"
+  }
+}
