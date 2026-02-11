@@ -1,0 +1,89 @@
+[
+    {
+        "id": "oyster-001",
+        "name": "殻付き生牡蠣",
+        "price": 4800,
+        "image": "/images/sample/kaki1.png",
+        "type": "withShell",
+        "inStock": true,
+        "description": "・販売は1kg単位になります。自然のものなので多少の前後があることをご理解ください。",
+        "detailImages": [
+            "/images/sample/kaki1.png",
+            "/images/sample/kaki2.jpeg",
+            "/images/sample/kaki3.jpg"
+        ]
+    },
+    {
+        "id": "oyster-002",
+        "name": "特選殻付き生牡蠣",
+        "price": 5200,
+        "image": "/images/sample/kaki2.jpeg",
+        "type": "withShell",
+        "inStock": true,
+        "description": "・厳選された特選の殻付き生牡蠣です。特別な日にぜひ。",
+        "detailImages": [
+            "/images/sample/kaki2.jpeg",
+            "/images/sample/kaki1.png",
+            "/images/sample/kaki3.jpg"
+        ]
+    },
+    {
+        "id": "oyster-003",
+        "name": "隠岐産殻付き生牡蠣",
+        "price": 7900,
+        "image": "/images/sample/kaki3.jpg",
+        "type": "withShell",
+        "inStock": true,
+        "description": "・隠岐の豊かな海で育ったブランド牡蠣です。",
+        "detailImages": [
+            "/images/sample/kaki3.jpg",
+            "/images/sample/kaki1.png",
+            "/images/sample/kaki2.jpeg"
+        ]
+    },
+    {
+        "id": "oyster-004",
+        "name": "画像なし商品サンプル",
+        "price": 3500,
+        "image": null,
+        "type": "noImage",
+        "inStock": true,
+        "description": "・こちらは現在未入荷のため画像がまだありません。",
+        "detailImages": []
+    },
+    {
+        "id": "oyster-005",
+        "name": "むき身 商品サンプル",
+        "price": 2800,
+        "image": "/images/sample/muki1.jpg",
+        "type": "noShell",
+        "inStock": false,
+        "description": "・1パックはおよそ500gとなります。自然のものなので多少の前後があることをご理解ください。",
+        "detailImages": [
+            "/images/sample/muki1.jpg",
+            "/images/sample/muki2.jpg"
+        ]
+    },
+    {
+        "id": "oyster-006",
+        "name": "ログイン必須商品A",
+        "price": 1000,
+        "image": null,
+        "type": "loginRequired",
+        "isLoggedInRequired": true,
+        "inStock": true,
+        "description": "・ログインユーザーのみ購入可能な商品です。",
+        "detailImages": []
+    },
+    {
+        "id": "oyster-007",
+        "name": "ログイン必須商品B",
+        "price": 2000,
+        "image": null,
+        "type": "loginRequired",
+        "isLoggedInRequired": true,
+        "inStock": true,
+        "description": "・ログインユーザーのみ購入可能な商品です。",
+        "detailImages": []
+    }
+]

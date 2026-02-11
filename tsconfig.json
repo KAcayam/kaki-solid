@@ -26,5 +26,9 @@
         "./styled-system/*"
       ]
     }
-  }
+  },
+  "include": [
+    "src",
+    ".vinxi/types/client"
+  ]
 }
