@@ -11,7 +11,7 @@ import datesData from "~/data/preselected-dates.json";
 // 出荷不可日データをJSONから読み込み
 const PRESELECTED_DATES = datesData.map((dateStr) => parseDate(dateStr));
 
-export const SelectCalendar = () => {
+export const ShippingCalendar = () => {
     const currentToday = today("Asia/Tokyo");
     const [focusedDate, setFocusedDate] = createSignal<DateValue>(currentToday);
     const keyOf = (d: DateValue) => `${d.year}-${d.month}-${d.day}`;
@@ -54,9 +54,8 @@ export const SelectCalendar = () => {
                     <DatePicker.Positioner>
                         <DatePicker.Content
                             p="4"
-                            w="auto"
-                            boxShadow="lg"
                             borderRadius="xl"
+                            boxShadow="lg"
                         >
                             <DatePicker.Context>
                                 {(api) => (
@@ -99,7 +98,13 @@ export const SelectCalendar = () => {
                                                                     {(day) => (
                                                                         <DatePicker.TableCell value={day}>
                                                                             <DatePicker.TableCellTrigger
+                                                                                w="10"
                                                                                 aria-description={preselectedSet.has(keyOf(day)) ? "出荷不可日" : undefined}
+                                                                                css={{
+                                                                                    "&[data-outside-range]": {
+                                                                                        color: "gray.6",
+                                                                                    },
+                                                                                }}
                                                                                 _unavailable={{
                                                                                     color: "white",
                                                                                     bg: "red.9",

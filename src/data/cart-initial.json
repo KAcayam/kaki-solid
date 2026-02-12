@@ -1,0 +1,34 @@
+[
+    {
+        "id": "oyster-001",
+        "title": "殻付き生牡蠣",
+        "price": 4800,
+        "quantity": 1,
+        "img": "/images/sample/kaki1.png",
+        "category": "withShell"
+    },
+    {
+        "id": "oyster-005",
+        "title": "むき身 商品サンプル",
+        "price": 2800,
+        "quantity": 4,
+        "img": "/images/sample/muki1.jpg",
+        "category": "noShell"
+    },
+    {
+        "id": "oyster-004",
+        "title": "画像なし商品サンプル",
+        "price": 3500,
+        "quantity": 3,
+        "img": null,
+        "category": "withShell"
+    },
+    {
+        "id": "oyster-003",
+        "title": "隠岐産殻付き生牡蠣",
+        "price": 7900,
+        "quantity": 2,
+        "img": "/images/sample/kaki3.jpg",
+        "category": "withShell"
+    }
+]

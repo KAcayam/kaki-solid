@@ -1,10 +1,10 @@
-/* src/types/index.ts */
+export type ProductCategory = 'withShell' | 'noShell';
 
 // 商品データの基本型
 export interface Product {
     id: string | number;
     name: string;
-    type?: string;
+    category: ProductCategory;
     image?: string | null;
     price?: number;
     isLoggedInRequired?: boolean;
@@ -20,9 +20,18 @@ export type ProductType = 'withShell' | 'noShell' | 'noImage';
 export interface CartItem {
     id: string;
     title: string;
-    variant: string;
+    category: ProductCategory;
     price: number;
     quantity: number;
     img: string | null;
-    type: ProductType;
+}
+
+// 数量選択の型
+export interface QuantitySelectProps {
+    name: string;
+    label: string;
+    value: string[];
+    onValueChange: (value: string[]) => void;
+    suffix: string;
+    max?: number;
 }

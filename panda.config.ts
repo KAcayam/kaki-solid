@@ -1,6 +1,7 @@
 import { blue } from "~/theme/colors/blue";
 import { green } from "~/theme/colors/green";
 import { red } from "~/theme/colors/red";
+import { yellow } from "~/theme/colors/yellow";
 import { mauve } from "~/theme/colors/mauve";
 import { animationStyles } from "~/theme/animation-styles";
 import { zIndex } from "~/theme/tokens/z-index";
@@ -109,6 +110,7 @@ export default defineConfig({
           red: red,
           green: green,
           blue: blue,
+          yellow: yellow,
         },
 
         shadows: shadows,

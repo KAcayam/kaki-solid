@@ -1,29 +1,25 @@
-/* AddToCart コンポーネントの実装 */
-import { useNavigate } from "@solidjs/router";
-import { Check } from "lucide-solid";
+/* ConfirmDeleteModal コンポーネントの実装 */
+import { TriangleAlert } from "lucide-solid";
 import { Box, VStack, HStack } from "styled-system/jsx";
-import { Button } from "~/components/ui/button";
-import * as Dialog from "~/components/ui/dialog";
-import { CloseButton } from "~/components/ui/close-button";
+import { Button } from "../ui/button";
+import * as Dialog from "../ui/dialog";
+import { CloseButton } from "../ui/close-button";
 
-interface AddToCartProps {
+interface ConfirmDeleteModalProps {
     open: boolean;
+    targetName: string;
+    onConfirm: () => void;
+    onCancel: () => void;
     onOpenChange: (open: boolean) => void;
-    onProceedToCheckout?: () => void;
-    onContinueShopping?: () => void;
 }
 
-export const AddToCart = (props: AddToCartProps) => {
-    const navigate = useNavigate();
-
-    const handleProceedToCheckoutInternal = () => {
-        props.onProceedToCheckout?.();
-        navigate("/cart");
+export const ConfirmDeleteModal = (props: ConfirmDeleteModalProps) => {
+    const handleConfirm = () => {
+        props.onConfirm();
     };
 
-    const handleContinueShoppingInternal = () => {
-        props.onContinueShopping?.();
-        navigate("/");
+    const handleCancel = () => {
+        props.onCancel();
     };
 
     return (
@@ -32,7 +28,7 @@ export const AddToCart = (props: AddToCartProps) => {
             onOpenChange={(e) => props.onOpenChange(e.open)}
         >
             <Dialog.Backdrop />
-            <Dialog.Positioner px="4">
+            <Dialog.Positioner>
                 <Dialog.Content>
                     <Dialog.CloseTrigger
                         asChild={(triggerProps) =>
@@ -41,34 +37,34 @@ export const AddToCart = (props: AddToCartProps) => {
                     />
                     <Dialog.Header>
                         <HStack mt="4" ml="8" gap="1">
-                            <Box color="green.8">
-                                <Check size={24} />
+                            <Box color="yellow.8">
+                                <TriangleAlert size={24} />
                             </Box>
                             <Dialog.Description fontSize="sm" color="fg.default">
-                                カートに商品が追加されました
+                                {props.targetName} を削除しますか？
                             </Dialog.Description>
                         </HStack>
                     </Dialog.Header>
 
                     <VStack gap="4" py="4">
                         <Button
-                            onClick={handleProceedToCheckoutInternal}
+                            onClick={handleConfirm}
                             w="72"
                             cursor="pointer"
                             colorPalette="blue"
                             borderRadius="lg"
                         >
-                            カートを確認する
+                            削除
                         </Button>
                         <Button
-                            onClick={handleContinueShoppingInternal}
+                            onClick={handleCancel}
                             variant="outline"
                             w="72"
                             cursor="pointer"
                             color="fg.muted"
                             borderRadius="lg"
                         >
-                            買い物を続ける
+                            キャンセル
                         </Button>
                     </VStack>
                 </Dialog.Content>

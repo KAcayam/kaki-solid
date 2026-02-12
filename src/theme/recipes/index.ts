@@ -1,3 +1,5 @@
+import { checkbox } from "./checkbox";
+import { radioGroup } from "./radio-group";
 import { dialog } from "./dialog";
 import { select } from "./select";
 import { datePicker } from "./date-picker";
@@ -19,4 +21,6 @@ export const slotRecipes = {
   datePicker,
   select,
   dialog,
+  radioGroup,
+  checkbox
 }
