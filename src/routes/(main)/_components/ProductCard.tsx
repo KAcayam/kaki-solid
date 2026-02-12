@@ -20,10 +20,10 @@ export const ProductCard = (props: ProductCardProps) => {
 
     // 遷移先のURLを生成
     const detailPageHref = () =>
-        props.product.type ? `/product/${props.product.type}?id=${props.product.id}` : "#";
+        props.product.category ? `/product/${props.product.category}?id=${props.product.id}` : "#";
 
     const handleNavigate = () => {
-        if (!showLoginRequired() && props.product.type) {
+        if (!showLoginRequired() && props.product.category) {
             navigate(detailPageHref());
         }
     };

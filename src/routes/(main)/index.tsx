@@ -1,6 +1,6 @@
 import { For } from "solid-js";
 import { Box, Flex, VStack, Grid } from "styled-system/jsx";
-import { SelectCalendar } from "~/components/common/SelectCalendar";
+import { ShippingCalendar } from "~/components/common/ShippingCalendar";
 import { ProductCard } from "./_components/ProductCard";
 import type { Product } from "~/types";
 
@@ -66,7 +66,7 @@ export default function ProductListPage() {
       <Box w="full">
         {/* 出荷不可日カレンダー　*/}
         <Flex mb="4" w="full" justify="flex-end">
-          <SelectCalendar />
+          <ShippingCalendar />
         </Flex>
 
         {/* 商品パネル（グリッド） */}
