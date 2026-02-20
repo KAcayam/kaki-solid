@@ -1,12 +1,11 @@
 import { CalendarSearch, ChevronLeftIcon, ChevronRightIcon } from "lucide-solid";
 import { parseDate, type DateValue, today } from "@internationalized/date";
 import { For, createSignal } from "solid-js";
-import { Portal } from "solid-js/web";
 import { Box, HStack, VStack } from "styled-system/jsx";
 import { IconButton } from "../ui/icon-button";
 import * as DatePicker from "../ui/date-picker";
-import datesData from "~/data/preselected-dates.json";
 
+import datesData from "~/data/preselected-dates.json"; // サンプルデータ
 
 // 出荷不可日データをJSONから読み込み
 const PRESELECTED_DATES = datesData.map((dateStr) => parseDate(dateStr));
@@ -50,100 +49,98 @@ export const ShippingCalendar = () => {
                     />
                 </DatePicker.Control>
 
-                <Portal>
-                    <DatePicker.Positioner>
-                        <DatePicker.Content
-                            p="4"
-                            borderRadius="xl"
-                            boxShadow="lg"
-                        >
-                            <DatePicker.Context>
-                                {(api) => (
-                                    <VStack gap="4">
-                                        <DatePicker.View view="day">
-                                            <DatePicker.ViewControl>
-                                                <DatePicker.PrevTrigger>
-                                                    <IconButton variant="plain" size="sm">
-                                                        <ChevronLeftIcon />
-                                                    </IconButton>
-                                                </DatePicker.PrevTrigger>
-                                                <DatePicker.ViewTrigger>
-                                                    <DatePicker.RangeText />
-                                                </DatePicker.ViewTrigger>
-                                                <DatePicker.NextTrigger>
-                                                    <IconButton variant="plain" size="sm">
-                                                        <ChevronRightIcon />
-                                                    </IconButton>
-                                                </DatePicker.NextTrigger>
-                                            </DatePicker.ViewControl>
+                <DatePicker.Positioner>
+                    <DatePicker.Content
+                        p="4"
+                        borderRadius="xl"
+                        boxShadow="lg"
+                    >
+                        <DatePicker.Context>
+                            {(api) => (
+                                <VStack gap="4">
+                                    <DatePicker.View view="day">
+                                        <DatePicker.ViewControl>
+                                            <DatePicker.PrevTrigger>
+                                                <IconButton variant="plain" size="sm">
+                                                    <ChevronLeftIcon />
+                                                </IconButton>
+                                            </DatePicker.PrevTrigger>
+                                            <DatePicker.ViewTrigger>
+                                                <DatePicker.RangeText />
+                                            </DatePicker.ViewTrigger>
+                                            <DatePicker.NextTrigger>
+                                                <IconButton variant="plain" size="sm">
+                                                    <ChevronRightIcon />
+                                                </IconButton>
+                                            </DatePicker.NextTrigger>
+                                        </DatePicker.ViewControl>
 
-                                            <DatePicker.Table>
-                                                <DatePicker.TableHead>
-                                                    <DatePicker.TableRow>
-                                                        <For each={api().weekDays}>
-                                                            {(weekDay) => (
-                                                                <DatePicker.TableHeader>
-                                                                    {weekDay.short}
-                                                                </DatePicker.TableHeader>
-                                                            )}
-                                                        </For>
-                                                    </DatePicker.TableRow>
-                                                </DatePicker.TableHead>
-
-                                                <DatePicker.TableBody>
-                                                    <For each={api().weeks}>
-                                                        {(week) => (
-                                                            <DatePicker.TableRow>
-                                                                <For each={week}>
-                                                                    {(day) => (
-                                                                        <DatePicker.TableCell value={day}>
-                                                                            <DatePicker.TableCellTrigger
-                                                                                w="10"
-                                                                                aria-description={preselectedSet.has(keyOf(day)) ? "出荷不可日" : undefined}
-                                                                                css={{
-                                                                                    "&[data-outside-range]": {
-                                                                                        color: "gray.6",
-                                                                                    },
-                                                                                }}
-                                                                                _unavailable={{
-                                                                                    color: "white",
-                                                                                    bg: "red.9",
-                                                                                    borderRadius: "md",
-                                                                                }}
-                                                                                _today={{
-                                                                                    _before: { display: "none" },
-                                                                                    boxShadow: "inset 0 0 4px 2px var(--colors-blue-4)",
-                                                                                }}
-                                                                            >
-                                                                                {day.day}
-                                                                            </DatePicker.TableCellTrigger>
-                                                                        </DatePicker.TableCell>
-                                                                    )}
-                                                                </For>
-                                                            </DatePicker.TableRow>
+                                        <DatePicker.Table>
+                                            <DatePicker.TableHead>
+                                                <DatePicker.TableRow>
+                                                    <For each={api().weekDays}>
+                                                        {(weekDay) => (
+                                                            <DatePicker.TableHeader>
+                                                                {weekDay.short}
+                                                            </DatePicker.TableHeader>
                                                         )}
                                                     </For>
-                                                </DatePicker.TableBody>
-                                            </DatePicker.Table>
-                                        </DatePicker.View>
+                                                </DatePicker.TableRow>
+                                            </DatePicker.TableHead>
 
-                                        <Box pt="2" w="full">
-                                            <IconButton
-                                                variant="outline"
-                                                size="sm"
-                                                fontWeight="normal"
-                                                w="full"
-                                                onClick={() => api().setOpen(false)}
-                                            >
-                                                閉じる
-                                            </IconButton>
-                                        </Box>
-                                    </VStack>
-                                )}
-                            </DatePicker.Context>
-                        </DatePicker.Content>
-                    </DatePicker.Positioner>
-                </Portal>
+                                            <DatePicker.TableBody>
+                                                <For each={api().weeks}>
+                                                    {(week) => (
+                                                        <DatePicker.TableRow>
+                                                            <For each={week}>
+                                                                {(day) => (
+                                                                    <DatePicker.TableCell value={day}>
+                                                                        <DatePicker.TableCellTrigger
+                                                                            w="10"
+                                                                            aria-description={preselectedSet.has(keyOf(day)) ? "出荷不可日" : undefined}
+                                                                            css={{
+                                                                                "&[data-outside-range]": {
+                                                                                    color: "gray.6",
+                                                                                },
+                                                                            }}
+                                                                            _unavailable={{
+                                                                                color: "white",
+                                                                                bg: "red.9",
+                                                                                borderRadius: "md",
+                                                                            }}
+                                                                            _today={{
+                                                                                _before: { display: "none" },
+                                                                                boxShadow: "inset 0 0 4px 2px var(--colors-blue-4)",
+                                                                            }}
+                                                                        >
+                                                                            {day.day}
+                                                                        </DatePicker.TableCellTrigger>
+                                                                    </DatePicker.TableCell>
+                                                                )}
+                                                            </For>
+                                                        </DatePicker.TableRow>
+                                                    )}
+                                                </For>
+                                            </DatePicker.TableBody>
+                                        </DatePicker.Table>
+                                    </DatePicker.View>
+
+                                    <Box pt="2" w="full">
+                                        <IconButton
+                                            variant="outline"
+                                            size="sm"
+                                            fontWeight="normal"
+                                            w="full"
+                                            onClick={() => api().setOpen(false)}
+                                        >
+                                            閉じる
+                                        </IconButton>
+                                    </Box>
+                                </VStack>
+                            )}
+                        </DatePicker.Context>
+                    </DatePicker.Content>
+                </DatePicker.Positioner>
             </DatePicker.Root>
 
             <VStack alignItems="start">

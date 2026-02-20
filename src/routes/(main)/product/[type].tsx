@@ -3,10 +3,11 @@ import { useSearchParams, A } from "@solidjs/router";
 import { Show } from "solid-js";
 import { ChevronLeft } from "lucide-solid";
 import { Box, Flex, Grid, styled } from "styled-system/jsx";
-import productsData from "~/data/products.json";
 import { ProductImageGallery } from "./_components/ProductImageGallery";
 import { ProductPurchase } from "./_components/ProductPurchase";
 import type { Product } from "~/types";
+
+import productsData from "~/data/products.json"; // サンプルデータ
 
 const StyledLink = styled(A);
 
