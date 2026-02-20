@@ -1,3 +1,8 @@
+import { accordion } from "./accordion";
+import { textarea } from "./textarea";
+import { combobox } from "./combobox";
+import { input } from "./input";
+import { field } from "./field";
 import { checkbox } from "./checkbox";
 import { radioGroup } from "./radio-group";
 import { dialog } from "./dialog";
@@ -15,6 +20,8 @@ export const recipes = {
   absoluteCenter,
   spinner,
   badge,
+  input,
+  textarea,
 }
 export const slotRecipes = {
   menu,
@@ -22,5 +29,8 @@ export const slotRecipes = {
   select,
   dialog,
   radioGroup,
-  checkbox
+  checkbox,
+  field,
+  combobox,
+  accordion
 }

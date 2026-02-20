@@ -76,6 +76,7 @@ export const Header = (props: HeaderProps) => {
                         <Button
                             variant="outline"
                             size="xs"
+                            color="fg.muted"
                             onClick={() => navigate("/login")}
                         >
                             ログイン

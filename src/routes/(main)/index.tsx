@@ -4,7 +4,7 @@ import { ShippingCalendar } from "~/components/common/ShippingCalendar";
 import { ProductCard } from "./_components/ProductCard";
 import type { Product } from "~/types";
 
-import productsData from "~/data/products.json";
+import productsData from "~/data/products.json"; // サンプルデータ
 
 export default function ProductListPage() {
   return (

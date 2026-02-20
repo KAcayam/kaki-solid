@@ -1,5 +1,3 @@
-export type ProductCategory = 'withShell' | 'noShell';
-
 // 商品データの基本型
 export interface Product {
     id: string | number;
@@ -13,8 +11,16 @@ export interface Product {
     detailImages?: string[];
 }
 
-// 商品種別の定義
-export type ProductType = 'withShell' | 'noShell' | 'noImage';
+// 商品カテゴリの型
+export type ProductCategory = 'withShell' | 'noShell';
+
+// カートのステッパーなどを含むレイアウトの型
+export interface CartConfig {
+    step: number;
+    title: string;
+    backTo: string;
+    backLabel: string;
+}
 
 // カート内商品の型（Product型をベースに拡張）
 export interface CartItem {
@@ -34,4 +40,58 @@ export interface QuantitySelectProps {
     onValueChange: (value: string[]) => void;
     suffix: string;
     max?: number;
+}
+
+// ユーザー情報の型
+export interface User {
+    id?: string;
+    lastName: string;
+    firstName: string;
+    lastNameKana: string;
+    firstNameKana: string;
+    email: string;
+    postalCode: string;
+    prefecture: string;
+    address1: string;
+    address2?: string | null;
+    phoneNumber: string;
+    receiveCampaignEmails: boolean;
+    isPrimary?: boolean;
+}
+
+// フォームの型
+export interface FormFieldProps {
+    label: string;
+    error?: string;
+    helperText?: string;
+    showAsterisk?: boolean;
+}
+
+export interface ComboboxItem {
+    label: string;
+    value: string;
+}
+
+export interface ConfirmAccountUpdateModalProps {
+    open: boolean;
+    tempAccount: User;
+    onConfirm: () => void;
+    onCancel: () => void;
+    onOpenChange: (open: boolean) => void;
+}
+
+export interface ConfirmSignupModalProps {
+    open: boolean;
+    tempAccount: User;
+    onConfirm: () => void;
+    onCancel: () => void;
+    onOpenChange: (open: boolean) => void;
+}
+
+export interface ConfirmGuestModalProps {
+    open: boolean;
+    tempAccount: User;
+    onConfirm: () => void;
+    onCancel: () => void;
+    onOpenChange: (open: boolean) => void;
 }

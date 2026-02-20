@@ -15,5 +15,8 @@ export default defineConfig({
                 "styled-system": resolve(__dirname, "styled-system"),
             },
         },
+        ssr: {
+            noExternal: ["lucide-solid"],
+        },
     },
 });

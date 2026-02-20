@@ -1,5 +1,5 @@
 /* CartItemCard コンポーネントの実装 */
-import { createSignal, createMemo, createEffect, For } from "solid-js";
+import { createSignal, createMemo, createEffect } from "solid-js";
 import { createListCollection } from "@ark-ui/solid";
 import { Trash2 } from "lucide-solid";
 import { Box, Flex, HStack, styled } from "styled-system/jsx";

@@ -208,10 +208,16 @@ export const CartSummary = (props: CartSummaryProps) => {
             colorPalette="blue"
             cursor="pointer"
           >
-            <Checkbox.Control borderRadius="l2">
+            <Checkbox.Control
+              borderRadius="l2"
+              borderColor="gray.6"
+            >
               <Checkbox.Indicator />
             </Checkbox.Control>
-            <Checkbox.Label fontSize="sm" color="fg.muted">
+            <Checkbox.Label
+              fontSize="sm"
+              color="fg.muted"
+            >
               ギフト用
             </Checkbox.Label>
             <Checkbox.HiddenInput />
@@ -227,7 +233,7 @@ export const CartSummary = (props: CartSummaryProps) => {
             通常2〜6日後にお届け
           </Box>
         </Box>
-        <Box fontSize="xs" lineHeight="1">
+        <Box fontSize="xs" lineHeight="0.6">
           ※ 出荷不可日、一部離島は除く
         </Box>
         <Box fontSize="xs">
