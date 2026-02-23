@@ -1,4 +1,3 @@
-/* Header コンポーネントの最適化実装 */
 import { useNavigate, A } from "@solidjs/router";
 import { Show } from "solid-js";
 import { ShoppingCart, User, Clipboard, LogOut } from "lucide-solid";

@@ -1,9 +1,7 @@
-/* src/routes/(main)/cart/_components/DeliveryDatePicker.tsx */
 import { createSignal } from "solid-js";
 import { For, Portal } from "solid-js/web";
 import { ChevronsUpDown, ChevronLeft, ChevronRight } from "lucide-solid";
 import { Box, Flex } from "styled-system/jsx";
-import { css } from "styled-system/css";
 import { IconButton } from "~/components/ui/icon-button";
 import * as DatePicker from "~/components/ui/date-picker";
 import { today, getLocalTimeZone, type DateValue } from "@internationalized/date";

@@ -3,7 +3,7 @@ import { Box, Grid, VStack, styled } from "styled-system/jsx";
 import { Button } from "~/components/ui/button";
 import * as Checkbox from "~/components/ui/checkbox";
 import { FormInput } from "~/components/common/FormInput";
-import { FormCombobox } from "~/components/common/FormCombobox";
+import { FormSelect } from "~/components/common/FormSelect";
 import { signupSchema, signupBaseSchema, type SignupInput } from "~/schemas/auth";
 import prefsData from "~/data/prefectures.json";
 import type { User } from "~/types";
@@ -17,7 +17,7 @@ interface GuestSignupFormProps {
 export const GuestSignupForm = (props: GuestSignupFormProps) => {
     const guest = props.guestUser;
 
-    // --- フィールドの状態管理 ---
+    // フィールドの状態管理
     const [formData, setFormData] = createSignal<SignupInput>({
         email: guest?.email || "",
         password: "",
@@ -37,9 +37,12 @@ export const GuestSignupForm = (props: GuestSignupFormProps) => {
     // エラー状態管理
     const [errors, setErrors] = createSignal<Record<string, string>>({});
 
-    // 入力値更新用のヘルパー
+    // 入力値更新用のヘルパー（エラーがあれば即座に再検証）
     const updateField = (key: keyof SignupInput, value: string) => {
         setFormData({ ...formData(), [key]: value });
+        if (errors()[key]) {
+            validateField(key);
+        }
     };
 
     // フィールド単位のバリデーション（blur時）
@@ -190,9 +193,9 @@ export const GuestSignupForm = (props: GuestSignupFormProps) => {
                     showAsterisk
                 />
 
-                <FormCombobox
+                <FormSelect
                     label="都道府県"
-                    placeholder="都道府県を検索・選択"
+                    placeholder="都道府県を選択"
                     items={prefectures}
                     value={(() => {
                         const match = prefectures.find(p => p.label === formData().prefecture);
@@ -204,7 +207,6 @@ export const GuestSignupForm = (props: GuestSignupFormProps) => {
                     }}
                     error={errors().prefecture}
                     showAsterisk
-                    onBlur={() => validateField("prefecture")}
                 />
 
                 <FormInput

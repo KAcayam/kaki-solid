@@ -1,4 +1,3 @@
-/* ConfirmDeleteModal コンポーネントの実装 */
 import { TriangleAlert } from "lucide-solid";
 import { Box, VStack, HStack } from "styled-system/jsx";
 import { Button } from "../ui/button";
@@ -37,8 +36,8 @@ export const ConfirmDeleteModal = (props: ConfirmDeleteModalProps) => {
                     />
                     <Dialog.Header>
                         <HStack mt="4" ml="8" gap="1">
-                            <Box color="yellow.8">
-                                <TriangleAlert size={24} />
+                            <Box color="yellow.8" mr="2">
+                                <TriangleAlert />
                             </Box>
                             <Dialog.Description fontSize="sm" color="fg.default">
                                 {props.targetName} を削除しますか？

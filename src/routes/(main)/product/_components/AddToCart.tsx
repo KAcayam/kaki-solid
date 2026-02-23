@@ -42,7 +42,7 @@ export const AddToCart = (props: AddToCartProps) => {
                     <Dialog.Header>
                         <HStack mt="4" ml="8" gap="1">
                             <Box color="green.8">
-                                <Check size={24} />
+                                <Check />
                             </Box>
                             <Dialog.Description fontSize="sm" color="fg.default">
                                 カートに商品が追加されました

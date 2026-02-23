@@ -1,4 +1,3 @@
-/* ProductDetailPage.tsx の論理エラー修正版（レイアウトは提示通りに維持） */
 import { useSearchParams, A } from "@solidjs/router";
 import { Show } from "solid-js";
 import { ChevronLeft } from "lucide-solid";
@@ -41,53 +40,55 @@ export default function ProductDetailPage() {
                             </StyledLink>
                         </Box>
 
-                        {/* 商品名 */}
-                        <Box display="flex" alignItems="start">
-                            <Box
-                                fontSize={{ base: "lg", md: "xl" }}
-                                fontWeight="medium"
-                            >
-                                {p().name}
-                            </Box>
-                        </Box>
-
-                        {/* メインコンテンツグリッド */}
-                        <Grid
-                            columns={{ base: 1, md: 2 }}
-                            gap="4"
-                            justifyItems="start"
-                        >
-                            {/* 画像・注釈 */}
-                            <Box
-                                borderRadius="xl"
-                                border="1px solid"
-                                borderColor="gray.6"
-                                p="4"
-                                bg="bg.default"
-                                w="full"
-                            >
-                                <ProductImageGallery images={p().detailImages} />
-
+                        <Box maxW="6xl" mx="auto">
+                            {/* 商品名 */}
+                            <Box display="flex" alignItems="start">
                                 <Box
-                                    mt="6"
-                                    color="fg.muted"
-                                    textAlign="left"
-                                    fontSize={{ base: "xs", md: "sm" }}
+                                    fontSize={{ base: "md", md: "lg" }}
+                                    fontWeight="medium"
                                 >
-                                    <Box as="p">
-                                        {p().description}
-                                    </Box>
-                                    <Box as="p">
-                                        ・その他注意書きがあるときもこちらに記載する
-                                    </Box>
+                                    {p().name}
                                 </Box>
                             </Box>
 
-                            {/* 購入情報パネル */}
-                            <Box w={{ base: "full", md: "96" }}>
-                                <ProductPurchase product={p()} />
-                            </Box>
-                        </Grid>
+                            {/* メインコンテンツグリッド */}
+                            <Grid
+                                columns={{ base: 1, md: 2 }}
+                                gap="4"
+                                justifyItems="start"
+                            >
+                                {/* 画像・注釈 */}
+                                <Box
+                                    borderRadius="xl"
+                                    border="1px solid"
+                                    borderColor="gray.6"
+                                    p="4"
+                                    bg="bg.default"
+                                    w="full"
+                                >
+                                    <ProductImageGallery images={p().detailImages} />
+
+                                    <Box
+                                        mt="6"
+                                        color="fg.muted"
+                                        textAlign="left"
+                                        fontSize={{ base: "xs", md: "sm" }}
+                                    >
+                                        <Box as="p">
+                                            {p().description}
+                                        </Box>
+                                        <Box as="p">
+                                            ・その他注意書きがあるときもこちらに記載する
+                                        </Box>
+                                    </Box>
+                                </Box>
+
+                                {/* 購入情報パネル */}
+                                <Box w={{ base: "full", md: "96" }}>
+                                    <ProductPurchase product={p()} />
+                                </Box>
+                            </Grid>
+                        </Box>
                     </Box>
                 </Flex>
             )}

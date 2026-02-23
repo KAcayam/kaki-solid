@@ -1,4 +1,4 @@
-import { onMount, Show } from "solid-js";
+import { onMount } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import { useCartContext } from "~/context/cart-context";
 import { useAuth } from "~/context/auth-context";

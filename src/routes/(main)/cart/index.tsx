@@ -22,7 +22,9 @@ export default function CartPage() {
         <Grid
             columns={{ base: 1, lg: 2 }}
             gap="4"
-            alignItems="start"
+            w="full"
+            maxW="4xl"
+            mx="auto"
         >
             <Box as="section">
                 <For each={context?.items() ?? []}>

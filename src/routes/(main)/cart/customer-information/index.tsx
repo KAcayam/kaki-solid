@@ -8,6 +8,7 @@ import { AccountEdit } from "~/components/common/account/AccoutnEdit";
 import { ConfirmAccountUpdateModal } from "~/components/common/account/ConfirmAccountUpdateModal";
 import { useAuth } from "~/context/auth-context";
 import { useCartContext } from "~/context/cart-context";
+import { notify } from "~/components/ui/toast";
 
 import usersData from "~/data/users.json"; // サンプルデータ
 
@@ -43,7 +44,7 @@ export default function CustomerInformationPage() {
         setUser({ ...tempAccount() });
         setShowConfirmModal(false);
         setIsEditing(false);
-        // toast.success 等の実装はプロジェクトの通知システムに合わせて追加
+        notify.success("アカウント情報を更新しました");
     };
 
     const handleCancelUpdate = () => {

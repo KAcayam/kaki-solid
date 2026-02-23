@@ -1,5 +1,3 @@
-/* AddressCard コンポーネントの実装 */
-import { Show } from "solid-js";
 import { Pencil, Trash2 } from "lucide-solid";
 import { Box, Flex, VStack, HStack } from "styled-system/jsx";
 import { IconButton } from "~/components/ui/icon-button";

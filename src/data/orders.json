@@ -1,0 +1,77 @@
+[
+    {
+        "id": "oys-2025-1223-001",
+        "date": "2025-12-23",
+        "total": 24100,
+        "subtotal": 22900,
+        "shippingCost": 1200,
+        "status": "入金待ち",
+        "items": [
+            {
+                "productId": "oyster-001",
+                "quantity": 2,
+                "price": 4800
+            },
+            {
+                "productId": "oyster-002",
+                "quantity": 1,
+                "price": 5200
+            },
+            {
+                "productId": "oyster-003",
+                "quantity": 3,
+                "price": 2700
+            }
+        ]
+    },
+    {
+        "id": "oys-2025-1204-002",
+        "date": "2025-12-04",
+        "total": 5180,
+        "subtotal": 4300,
+        "shippingCost": 880,
+        "status": "発送準備中",
+        "items": [
+            {
+                "productId": "oyster-001",
+                "quantity": 1,
+                "price": 4300
+            }
+        ]
+    },
+    {
+        "id": "oys-2025-1124-001",
+        "date": "2025-11-24",
+        "total": 11100,
+        "subtotal": 10100,
+        "shippingCost": 1000,
+        "status": "キャンセル済み",
+        "items": [
+            {
+                "productId": "oyster-005",
+                "quantity": 2,
+                "price": 4800
+            },
+            {
+                "productId": "oyster-003",
+                "quantity": 1,
+                "price": 1300
+            }
+        ]
+    },
+    {
+        "id": "oys-2025-1121-001",
+        "date": "2025-11-21",
+        "total": 9480,
+        "subtotal": 8600,
+        "shippingCost": 880,
+        "status": "配達完了",
+        "items": [
+            {
+                "productId": "oyster-004",
+                "quantity": 2,
+                "price": 4300
+            }
+        ]
+    }
+]

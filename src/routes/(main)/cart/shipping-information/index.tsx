@@ -5,8 +5,10 @@ import { Button } from "~/components/ui/button";
 import * as Checkbox from "~/components/ui/checkbox";
 import * as RadioGroup from "~/components/ui/radio-group";
 import * as Dialog from "~/components/ui/dialog";
+import { CloseButton } from "~/components/ui/close-button";
 import * as Field from "~/components/ui/field";
 import { Textarea } from "~/components/ui/textarea";
+import { notify } from "~/components/ui/toast";
 import { useCartContext } from "~/context/cart-context";
 import { AddressCard } from "./_components/AddressCard";
 import { AddressEdit } from "./_components/AddressEdit";
@@ -69,6 +71,7 @@ export default function ShippingInformationPage() {
             setAddresses(addresses().filter((u) => u.id !== user.id));
         }
         setDeletingUser(null);
+        notify.success("配送先を削除しました");
     };
     // ギフト用チェックボックス
     const [isGift, setIsGift] = createSignal(false);
@@ -78,6 +81,7 @@ export default function ShippingInformationPage() {
         if (target && updated.id) {
             // 編集
             setAddresses(addresses().map((u) => (u.id === updated.id ? updated : u)));
+            notify.success("配送先情報を更新しました");
         } else {
             // 新規追加
             const newId = (
@@ -86,13 +90,14 @@ export default function ShippingInformationPage() {
             const newUser: User = { ...updated, id: newId };
             setAddresses([...addresses(), newUser]);
             setSelectedId(newUser.id as string);
+            notify.success("配送先を追加しました");
         }
         setShowAddressModal(false);
     };
 
     return (
-        <VStack gap="6" w="full">
-            <VStack w="full" maxW="3xl" gap="4">
+        <VStack gap="6">
+            <VStack gap="4">
                 <Box w="full" maxW="xl">
                     {/* 配送先選択グループ */}
                     <RadioGroup.Root
@@ -198,7 +203,18 @@ export default function ShippingInformationPage() {
             >
                 <Dialog.Backdrop />
                 <Dialog.Positioner>
-                    <Dialog.Content w="full" maxW="sm" p="0">
+                    <Dialog.Content
+                        w="full"
+                        maxW="sm"
+                        maxH="80vh"
+                        overflowY="auto"
+                        p="0"
+                    >
+                        <Dialog.CloseTrigger
+                            asChild={(triggerProps) =>
+                                <CloseButton {...triggerProps()} />
+                            }
+                        />
                         <AddressEdit
                             editingUser={editingUser()}
                             onSave={handleModalSubmit}

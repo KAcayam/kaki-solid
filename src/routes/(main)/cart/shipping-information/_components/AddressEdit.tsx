@@ -2,7 +2,7 @@ import { createSignal, createEffect } from "solid-js";
 import { Box, Grid, VStack, styled } from "styled-system/jsx";
 import { Button } from "~/components/ui/button";
 import { FormInput } from "~/components/common/FormInput";
-import { FormCombobox } from "~/components/common/FormCombobox";
+import { FormSelect } from "~/components/common/FormSelect";
 import { addressSchema } from "~/schemas/auth";
 import prefsData from "~/data/prefectures.json";
 import type { User } from "~/types";
@@ -51,6 +51,14 @@ export const AddressEdit = (props: AddressEditProps) => {
             }
             return next;
         });
+    };
+
+    // 入力時にエラーがあれば即座に再検証
+    const handleInput = (key: keyof typeof addressSchema.shape, setter: (v: string) => void, value: string) => {
+        setter(value);
+        if (errors()[key]) {
+            validateField(key);
+        }
     };
 
     // editingUser が変更された際（編集開始時）の同期処理
@@ -110,8 +118,6 @@ export const AddressEdit = (props: AddressEditProps) => {
 
     return (
         <Box
-            maxH="90vh"
-            overflowY="auto"
             p="6"
             bg="bg.default"
             borderRadius="xl"
@@ -137,7 +143,7 @@ export const AddressEdit = (props: AddressEditProps) => {
                         label="姓"
                         placeholder="名前(姓)"
                         value={lastName()}
-                        onInput={(e) => setLastName(e.currentTarget.value)}
+                        onInput={(e) => handleInput("lastName", setLastName, e.currentTarget.value)}
                         onBlur={() => validateField("lastName")}
                         error={errors().lastName}
                         showAsterisk
@@ -146,7 +152,7 @@ export const AddressEdit = (props: AddressEditProps) => {
                         label="名"
                         placeholder="名前(名)"
                         value={firstName()}
-                        onInput={(e) => setFirstName(e.currentTarget.value)}
+                        onInput={(e) => handleInput("firstName", setFirstName, e.currentTarget.value)}
                         onBlur={() => validateField("firstName")}
                         error={errors().firstName}
                         showAsterisk
@@ -157,15 +163,15 @@ export const AddressEdit = (props: AddressEditProps) => {
                     label="郵便番号"
                     placeholder="ハイフンなし"
                     value={postalCode()}
-                    onInput={(e) => setPostalCode(e.currentTarget.value)}
+                    onInput={(e) => handleInput("postalCode", setPostalCode, e.currentTarget.value)}
                     onBlur={() => validateField("postalCode")}
                     error={errors().postalCode}
                     showAsterisk
                 />
 
-                <FormCombobox
+                <FormSelect
                     label="都道府県"
-                    placeholder="都道府県を検索・選択"
+                    placeholder="都道府県を選択"
                     items={prefectures}
                     value={(() => {
                         const match = prefectures.find(p => p.label === prefecture());
@@ -177,14 +183,13 @@ export const AddressEdit = (props: AddressEditProps) => {
                     }}
                     error={errors().prefecture}
                     showAsterisk
-                    onBlur={() => validateField("prefecture")}
                 />
 
                 <FormInput
                     label="住所１"
                     placeholder="市区町村・番地"
                     value={address1()}
-                    onInput={(e) => setAddress1(e.currentTarget.value)}
+                    onInput={(e) => handleInput("address1", setAddress1, e.currentTarget.value)}
                     onBlur={() => validateField("address1")}
                     error={errors().address1}
                     showAsterisk
@@ -194,7 +199,7 @@ export const AddressEdit = (props: AddressEditProps) => {
                     label="住所２"
                     placeholder="建物名・部屋番号はこちら"
                     value={address2()}
-                    onInput={(e) => setAddress2(e.currentTarget.value)}
+                    onInput={(e) => handleInput("address2", setAddress2, e.currentTarget.value)}
                     error={errors().address2}
                 />
 
@@ -202,7 +207,7 @@ export const AddressEdit = (props: AddressEditProps) => {
                     label="電話番号"
                     placeholder="ハイフンなし"
                     value={phoneNumber()}
-                    onInput={(e) => setPhoneNumber(e.currentTarget.value)}
+                    onInput={(e) => handleInput("phoneNumber", setPhoneNumber, e.currentTarget.value)}
                     onBlur={() => validateField("phoneNumber")}
                     error={errors().phoneNumber}
                     showAsterisk

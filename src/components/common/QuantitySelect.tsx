@@ -1,4 +1,3 @@
-/* src/components/common/QuantitySelect.tsx の実装 */
 import { For } from "solid-js";
 import { createListCollection } from "@ark-ui/solid";
 import { Box, HStack } from "styled-system/jsx";

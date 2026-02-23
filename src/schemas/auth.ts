@@ -7,7 +7,7 @@ export const loginSchema = z.object({
         .min(1, { message: '必須項目です' })
         .pipe(z.email({ message: '有効なメールアドレスを入力してください' })),
 
-    password: z.string().min(8, { message: '半角英数字8文字以上にしてください' })
+    password: z.string().min(8, { message: 'パスワードが違います' })
 });
 
 // 新規登録・アカウント編集用のベーススキーマ（フィールド単位バリデーション用）
