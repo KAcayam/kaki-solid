@@ -1,16 +1,16 @@
-/* ゲスト購入フォームの実装（src/routes/(main)/cart/customer-information/_components/GuestForm.tsx） */
 import { createSignal } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import { Box, Grid, VStack, styled } from "styled-system/jsx";
 import { Button } from "~/components/ui/button";
 import * as Checkbox from "~/components/ui/checkbox";
 import { FormInput } from "~/components/common/FormInput";
-import { FormCombobox } from "~/components/common/FormCombobox";
+import { FormSelect } from "~/components/common/FormSelect";
 import { guestSchema, type GuestInput } from "~/schemas/auth";
 import prefsData from "~/data/prefectures.json";
 import { ConfirmGuestModal } from "./ConfirmGuestModal";
+import { notify } from "~/components/ui/toast";
 
-// --- 都道府県データの定義 ---
+// 都道府県データの定義
 type Prefecture = { label: string; value: string };
 const prefectures = prefsData as Prefecture[];
 
@@ -22,7 +22,7 @@ export const GuestForm = (props: GuestFormProps) => {
     const navigate = useNavigate();
     const cancelLink = props.cancelLink ?? "/";
 
-    // --- フォームの状態管理 ---
+    // フォームの状態管理
     const [formData, setFormData] = createSignal<GuestInput>({
         lastName: "",
         firstName: "",
@@ -39,9 +39,12 @@ export const GuestForm = (props: GuestFormProps) => {
     const [errors, setErrors] = createSignal<Record<string, string>>({});
     const [showConfirmModal, setShowConfirmModal] = createSignal(false);
 
-    // 入力更新ヘルパー
+    // 入力更新ヘルパー（エラーがあれば即座に再検証）
     const updateField = (key: keyof GuestInput, value: string) => {
         setFormData({ ...formData(), [key]: value });
+        if (errors()[key]) {
+            validateField(key);
+        }
     };
 
     // フィールド単位のバリデーション（blur時）
@@ -84,6 +87,7 @@ export const GuestForm = (props: GuestFormProps) => {
     const handleConfirm = () => {
         // API送信などの処理をここに記述
         setShowConfirmModal(false);
+        notify.success("情報を登録しました");
     };
 
     return (
@@ -150,9 +154,9 @@ export const GuestForm = (props: GuestFormProps) => {
                         showAsterisk
                     />
 
-                    <FormCombobox
+                    <FormSelect
                         label="都道府県"
-                        placeholder="都道府県を検索・選択"
+                        placeholder="都道府県を選択"
                         items={prefectures}
                         value={(() => {
                             const match = prefectures.find(p => p.label === formData().prefecture);
@@ -164,7 +168,6 @@ export const GuestForm = (props: GuestFormProps) => {
                         }}
                         error={errors().prefecture}
                         showAsterisk
-                        onBlur={() => validateField("prefecture")}
                     />
 
                     <FormInput

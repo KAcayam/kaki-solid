@@ -7,10 +7,13 @@ import { ConfirmSignupModal } from "~/components/common/account/ConfirmSignupMod
 import usersData from "~/data/users.json";
 import type { User } from "~/types";
 import type { SignupInput } from "~/schemas/auth";
+import { toaster } from "~/components/ui/toast";
 
 const StyledLink = styled(A);
 
 export default function GuestSignupPage() {
+    const pageTitle = "アカウント情報登録";
+
     const navigate = useNavigate();
 
     // 仮のゲストユーザー情報 (ID: 2) の取得
@@ -31,17 +34,18 @@ export default function GuestSignupPage() {
         // ここに実際の登録処理（API通信等）を記述
         setShowConfirmModal(false);
         navigate("/");
+        toaster.create({
+            description: "情報を登録しました",
+            type: "success",
+            closable: true,
+            duration: 6000,
+        });
     };
 
     return (
-        <Flex
-            direction="column"
-            w="full"
-            px="4"
-            alignItems="center"
-        >
-            <Box w="full" maxW="screen-2xl">
-                {/* ヘッダー：戻るリンク */}
+        <Flex w="full" px="4">
+            <Box w="full">
+                {/* TOPに戻るリンク */}
                 <Box mb="4">
                     <StyledLink
                         href="/"
@@ -58,12 +62,17 @@ export default function GuestSignupPage() {
                 </Box>
 
                 {/* ページタイトル */}
-                <Box mb="2">
+                <Box
+                    w="full"
+                    maxW="sm"
+                    mx="auto"
+                >
                     <Box
+                        fontSize={{ base: "md", md: "lg" }}
                         fontWeight="medium"
                         textAlign="start"
                     >
-                        アカウント情報登録
+                        {pageTitle}
                     </Box>
                 </Box>
 

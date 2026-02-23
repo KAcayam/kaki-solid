@@ -1,14 +1,13 @@
-/* ConfirmAccountUpdateModal コンポーネントの実装 */
-import { Box, VStack } from "../../../../styled-system/jsx";
+import { Box, VStack } from "styled-system/jsx";
 import { Button } from "~/components/ui/button";
 import * as Dialog from "~/components/ui/dialog";
+import { CloseButton } from "~/components/ui/close-button";
 import { AccountData } from "./AccountData";
 import type { ConfirmAccountUpdateModalProps } from "~/types";
 
 export const ConfirmAccountUpdateModal = (props: ConfirmAccountUpdateModalProps) => {
     const handleConfirm = () => {
         props.onConfirm();
-        // 閉じる処理は親側（onConfirm内）またはシグナル経由で行われる想定
     };
 
     const handleCancel = () => {
@@ -26,14 +25,17 @@ export const ConfirmAccountUpdateModal = (props: ConfirmAccountUpdateModalProps)
                     w="full"
                     maxW="sm"
                     mx="auto"
+                    maxH="80vh"
+                    overflowY="auto"
                     p="0"
-                    overflow="hidden"
                 >
-                    <Dialog.CloseTrigger />
+                    <Dialog.CloseTrigger
+                        asChild={(triggerProps) =>
+                            <CloseButton {...triggerProps()} />
+                        }
+                    />
 
                     <Box
-                        maxH="90vh"
-                        overflowY="auto"
                         bg="bg.default"
                         p="4"
                     >

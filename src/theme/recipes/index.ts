@@ -1,3 +1,5 @@
+import { icon } from "./icon";
+import { toast } from "./toast";
 import { accordion } from "./accordion";
 import { textarea } from "./textarea";
 import { combobox } from "./combobox";
@@ -22,6 +24,8 @@ export const recipes = {
   badge,
   input,
   textarea,
+  toast,
+  icon
 }
 export const slotRecipes = {
   menu,

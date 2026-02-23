@@ -42,6 +42,26 @@ export interface QuantitySelectProps {
     max?: number;
 }
 
+// 注文ステータスの型
+export type OrderStatus = '注文受付' | '入金待ち' | '発送準備中' | 'キャンセル済み' | '配達完了';
+
+// 注文商品の型（Product + 数量）
+export interface OrderProduct extends Product {
+    quantity: number;
+}
+
+// 注文履歴の型
+export interface Order {
+    id: string;
+    orderDate: string;
+    orderNumber: string;
+    totalAmount: number;
+    status: OrderStatus;
+    subtotal: number;
+    shippingCost: number;
+    products: OrderProduct[];
+}
+
 // ユーザー情報の型
 export interface User {
     id?: string;
@@ -94,4 +114,12 @@ export interface ConfirmGuestModalProps {
     onConfirm: () => void;
     onCancel: () => void;
     onOpenChange: (open: boolean) => void;
+}
+
+export interface ConfirmSendEmailProps {
+    email: string;
+    subject: string;
+    message: string;
+    onCancel: () => void;
+    onSend: () => void;
 }

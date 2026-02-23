@@ -1,5 +1,4 @@
-/* src/routes/(main)/cart.tsx */
-import { ParentProps } from "solid-js";
+import { ParentProps, Show } from "solid-js";
 import { A } from "@solidjs/router";
 import { ChevronLeft } from "lucide-solid";
 import { Box, Flex, styled } from "styled-system/jsx";
@@ -26,30 +25,43 @@ export default function CartFlowLayout(props: ParentProps) {
                         fontSize={{ base: "xs", md: "sm" }}
                         _hover={{ color: "fg.muted" }}
                     >
-                        <ChevronLeft size={16} />
+                        <Show when={context?.config().backLabel}>
+                            <ChevronLeft size={16} />
+                        </Show>
                         {context?.config().backLabel}
                     </StyledLink>
                 </Box>
 
                 {/* ステッパー */}
-                <Box mx="auto" mb="4" w="full" maxW="2xl">
+                <Box
+                    mx="auto"
+                    mb="4"
+                    w="full"
+                    maxW="2xl"
+                >
                     <Stepper currentStepIndex={context?.config().step ?? 0} />
                 </Box>
 
                 {/* タイトル */}
                 <Box
-                    as="h1"
-                    display="flex"
-                    alignItems="start"
-                    my="2"
-                    fontSize={{ base: "md", md: "lg" }}
-                    fontWeight="medium"
+                    w="full"
+                    maxW="4xl"
+                    mx="auto"
                 >
-                    {context?.config().title}
-                </Box>
+                    <Box
+                        as="h1"
+                        display="flex"
+                        alignItems="start"
+                        my="2"
+                        fontSize={{ base: "md", md: "lg" }}
+                        fontWeight="medium"
+                    >
+                        {context?.config().title}
+                    </Box>
 
-                {/* ページコンテンツ */}
-                {props.children}
+                    {/* ページコンテンツ */}
+                    {props.children}
+                </Box>
             </Box>
         </Flex>
     );

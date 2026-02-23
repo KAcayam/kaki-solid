@@ -1,6 +1,7 @@
-import { Box, VStack } from "../../../../styled-system/jsx";
+import { Box, VStack } from "styled-system/jsx";
 import { Button } from "~/components/ui/button";
 import * as Dialog from "~/components/ui/dialog";
+import { CloseButton } from "~/components/ui/close-button";
 import { AccountData } from "./AccountData";
 import type { ConfirmGuestModalProps } from "~/types";
 
@@ -25,13 +26,16 @@ export const ConfirmGuestModal = (props: ConfirmGuestModalProps) => {
                     maxW="sm"
                     mx="auto"
                     p="0"
-                    overflow="hidden"
+                    maxH="80vh"
+                    overflowY="auto"
                 >
-                    <Dialog.CloseTrigger />
+                    <Dialog.CloseTrigger
+                        asChild={(triggerProps) =>
+                            <CloseButton {...triggerProps()} />
+                        }
+                    />
 
                     <Box
-                        maxH="90vh"
-                        overflowY="auto"
                         bg="bg.default"
                         p="4"
                     >

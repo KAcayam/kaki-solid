@@ -3,7 +3,7 @@ import { Box, Grid, VStack, styled } from "styled-system/jsx";
 import { Button } from "~/components/ui/button";
 import * as Checkbox from "~/components/ui/checkbox";
 import { FormInput } from "../FormInput";
-import { FormCombobox } from "../FormCombobox";
+import { FormSelect } from "../FormSelect";
 import { signupSchema, signupBaseSchema } from "~/schemas/auth";
 import type { SignupInput } from "~/schemas/auth";
 import type { User } from "~/types";
@@ -16,36 +16,41 @@ interface AccountEditProps {
 }
 
 export const AccountEdit = (props: AccountEditProps) => {
-    const [lastName, setLastName] = createSignal(props.editingAccount.lastName);
-    const [firstName, setFirstName] = createSignal(props.editingAccount.firstName);
-    const [lastNameKana, setLastNameKana] = createSignal(props.editingAccount.lastNameKana);
-    const [firstNameKana, setFirstNameKana] = createSignal(props.editingAccount.firstNameKana);
-    const [email, setEmail] = createSignal(props.editingAccount.email);
-    const [postalCode, setPostalCode] = createSignal(props.editingAccount.postalCode);
-    const [prefecture, setPrefecture] = createSignal(props.editingAccount.prefecture);
-    const [address1, setAddress1] = createSignal(props.editingAccount.address1);
-    const [address2, setAddress2] = createSignal(props.editingAccount.address2 || "");
-    const [phoneNumber, setPhoneNumber] = createSignal(props.editingAccount.phoneNumber);
+    // フィールドの状態管理
+    const [formData, setFormData] = createSignal<SignupInput>({
+        email: props.editingAccount.email,
+        password: 'dummy1234',
+        passwordConfirm: 'dummy1234',
+        lastName: props.editingAccount.lastName,
+        firstName: props.editingAccount.firstName,
+        lastNameKana: props.editingAccount.lastNameKana,
+        firstNameKana: props.editingAccount.firstNameKana,
+        postalCode: props.editingAccount.postalCode,
+        prefecture: props.editingAccount.prefecture,
+        address1: props.editingAccount.address1,
+        address2: props.editingAccount.address2 || "",
+        phoneNumber: props.editingAccount.phoneNumber,
+    });
     const [receiveCampaignEmails, setReceiveCampaignEmails] = createSignal(props.editingAccount.receiveCampaignEmails);
 
+    // エラー状態管理
     const [errors, setErrors] = createSignal<Record<string, string>>({});
 
-    // --- 都道府県データの定義 ---
+    // 都道府県データの定義
     type Prefecture = { label: string; value: string };
     const prefectures = prefsData as Prefecture[];
 
-    // フィールド名からシグナルの値を取得するマッピング
-    const getFieldValue = (key: string): string => {
-        const map: Record<string, () => string> = {
-            lastName, firstName, lastNameKana, firstNameKana,
-            email, postalCode, prefecture, address1, address2, phoneNumber
-        };
-        return map[key]?.() ?? "";
+    // 入力値更新用のヘルパー（エラーがあれば即座に再検証）
+    const updateField = (key: keyof SignupInput, value: string) => {
+        setFormData({ ...formData(), [key]: value });
+        if (errors()[key]) {
+            validateField(key);
+        }
     };
 
     // フィールド単位のバリデーション（blur時）
     const validateField = (key: keyof SignupInput) => {
-        const value = getFieldValue(key);
+        const value = formData()[key];
         const fieldSchema = signupBaseSchema.shape[key];
         if (!fieldSchema) return;
 
@@ -65,20 +70,7 @@ export const AccountEdit = (props: AccountEditProps) => {
         e.preventDefault();
         setErrors({});
 
-        const result = signupSchema.safeParse({
-            lastName: lastName(),
-            firstName: firstName(),
-            lastNameKana: lastNameKana(),
-            firstNameKana: firstNameKana(),
-            email: email(),
-            postalCode: postalCode(),
-            prefecture: prefecture(),
-            address1: address1(),
-            address2: address2(),
-            phoneNumber: phoneNumber(),
-            password: 'dummy1234',
-            passwordConfirm: 'dummy1234'
-        });
+        const result = signupSchema.safeParse(formData());
 
         if (!result.success) {
             const newErrors: Record<string, string> = {};
@@ -91,16 +83,16 @@ export const AccountEdit = (props: AccountEditProps) => {
 
         props.onSave({
             ...props.editingAccount,
-            lastName: lastName(),
-            firstName: firstName(),
-            lastNameKana: lastNameKana(),
-            firstNameKana: firstNameKana(),
-            email: email(),
-            postalCode: postalCode(),
-            prefecture: prefecture(),
-            address1: address1(),
-            address2: address2(),
-            phoneNumber: phoneNumber(),
+            lastName: formData().lastName,
+            firstName: formData().firstName,
+            lastNameKana: formData().lastNameKana,
+            firstNameKana: formData().firstNameKana,
+            email: formData().email,
+            postalCode: formData().postalCode,
+            prefecture: formData().prefecture,
+            address1: formData().address1,
+            address2: formData().address2,
+            phoneNumber: formData().phoneNumber,
             receiveCampaignEmails: receiveCampaignEmails(),
         });
     };
@@ -134,16 +126,16 @@ export const AccountEdit = (props: AccountEditProps) => {
                 <Grid columns={2} gap="4">
                     <FormInput
                         label="姓"
-                        value={lastName()}
-                        onInput={(e) => setLastName(e.currentTarget.value)}
+                        value={formData().lastName}
+                        onInput={(e) => updateField("lastName", e.currentTarget.value)}
                         onBlur={() => validateField("lastName")}
                         error={errors().lastName}
                         showAsterisk
                     />
                     <FormInput
                         label="名"
-                        value={firstName()}
-                        onInput={(e) => setFirstName(e.currentTarget.value)}
+                        value={formData().firstName}
+                        onInput={(e) => updateField("firstName", e.currentTarget.value)}
                         onBlur={() => validateField("firstName")}
                         error={errors().firstName}
                         showAsterisk
@@ -153,16 +145,16 @@ export const AccountEdit = (props: AccountEditProps) => {
                 <Grid columns={2} gap="4">
                     <FormInput
                         label="姓(カナ)"
-                        value={lastNameKana()}
-                        onInput={(e) => setLastNameKana(e.currentTarget.value)}
+                        value={formData().lastNameKana}
+                        onInput={(e) => updateField("lastNameKana", e.currentTarget.value)}
                         onBlur={() => validateField("lastNameKana")}
                         error={errors().lastNameKana}
                         showAsterisk
                     />
                     <FormInput
                         label="名(カナ)"
-                        value={firstNameKana()}
-                        onInput={(e) => setFirstNameKana(e.currentTarget.value)}
+                        value={formData().firstNameKana}
+                        onInput={(e) => updateField("firstNameKana", e.currentTarget.value)}
                         onBlur={() => validateField("firstNameKana")}
                         error={errors().firstNameKana}
                         showAsterisk
@@ -172,8 +164,8 @@ export const AccountEdit = (props: AccountEditProps) => {
                 <FormInput
                     label="メールアドレス"
                     type="email"
-                    value={email()}
-                    onInput={(e) => setEmail(e.currentTarget.value)}
+                    value={formData().email}
+                    onInput={(e) => updateField("email", e.currentTarget.value)}
                     onBlur={() => validateField("email")}
                     error={errors().email}
                     showAsterisk
@@ -181,34 +173,33 @@ export const AccountEdit = (props: AccountEditProps) => {
 
                 <FormInput
                     label="郵便番号"
-                    value={postalCode()}
-                    onInput={(e) => setPostalCode(e.currentTarget.value)}
+                    value={formData().postalCode}
+                    onInput={(e) => updateField("postalCode", e.currentTarget.value)}
                     onBlur={() => validateField("postalCode")}
                     error={errors().postalCode}
                     showAsterisk
                 />
 
-                <FormCombobox
+                <FormSelect
                     label="都道府県"
-                    placeholder="都道府県を検索・選択"
+                    placeholder="都道府県を選択"
                     items={prefectures}
                     value={(() => {
-                        const match = prefectures.find(p => p.label === prefecture());
+                        const match = prefectures.find(p => p.label === formData().prefecture);
                         return match ? [match.value] : [];
                     })()}
                     onValueChange={(details) => {
                         const selected = prefectures.find(p => p.value === details.value[0]);
-                        setPrefecture(selected?.label || "");
+                        updateField("prefecture", selected?.label || "");
                     }}
                     error={errors().prefecture}
                     showAsterisk
-                    onBlur={() => validateField("prefecture")}
                 />
 
                 <FormInput
                     label="住所１"
-                    value={address1()}
-                    onInput={(e) => setAddress1(e.currentTarget.value)}
+                    value={formData().address1}
+                    onInput={(e) => updateField("address1", e.currentTarget.value)}
                     onBlur={() => validateField("address1")}
                     error={errors().address1}
                     showAsterisk
@@ -216,23 +207,22 @@ export const AccountEdit = (props: AccountEditProps) => {
 
                 <FormInput
                     label="住所２"
-                    value={address2()}
-                    onInput={(e) => setAddress2(e.currentTarget.value)}
+                    value={formData().address2 ?? ""}
+                    onInput={(e) => updateField("address2", e.currentTarget.value)}
                     onBlur={() => validateField("address2")}
                     error={errors().address2}
                 />
 
                 <FormInput
                     label="電話番号"
-                    value={phoneNumber()}
-                    onInput={(e) => setPhoneNumber(e.currentTarget.value)}
+                    value={formData().phoneNumber}
+                    onInput={(e) => updateField("phoneNumber", e.currentTarget.value)}
                     onBlur={() => validateField("phoneNumber")}
                     error={errors().phoneNumber}
                     showAsterisk
                 />
 
                 <Box
-                    pt="2"
                     display="flex"
                     alignItems="start"
                     w="full"
@@ -259,7 +249,7 @@ export const AccountEdit = (props: AccountEditProps) => {
                     </Checkbox.Root>
                 </Box>
 
-                <VStack gap="3" pt="4">
+                <VStack gap="3">
                     <Button
                         type="submit"
                         w="full"

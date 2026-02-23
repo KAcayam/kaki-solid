@@ -7,7 +7,7 @@ import * as Field from "~/components/ui/field";
 import { IconButton } from "~/components/ui/icon-button";
 import { Input } from "~/components/ui/input";
 import { FormInput } from "~/components/common/FormInput";
-import { loginSchema } from "~/schemas/auth";
+import { loginSchema, type LoginInput } from "~/schemas/auth";
 
 interface LoginFormProps {
     signupLink?: string;
@@ -21,6 +21,32 @@ export const LoginForm = (props: LoginFormProps) => {
     const [errors, setErrors] = createSignal<Record<string, string>>({});
 
     const signupLink = props.signupLink ?? "/signup";
+
+    // フィールド単位のバリデーション（blur時）
+    const validateField = (key: keyof LoginInput) => {
+        const values: Record<string, string> = { email: email(), password: password() };
+        const fieldSchema = loginSchema.shape[key];
+        if (!fieldSchema) return;
+
+        const result = fieldSchema.safeParse(values[key]);
+        const newErrors = { ...errors() };
+
+        if (!result.success) {
+            newErrors[key] = result.error.issues[0].message;
+        } else {
+            delete newErrors[key];
+        }
+
+        setErrors(newErrors);
+    };
+
+    // 入力時にエラーがあれば即座に再検証
+    const handleInput = (key: keyof LoginInput, setter: (v: string) => void, value: string) => {
+        setter(value);
+        if (errors()[key]) {
+            validateField(key);
+        }
+    };
 
     const onSubmit = (e: SubmitEvent) => {
         e.preventDefault();
@@ -80,7 +106,8 @@ export const LoginForm = (props: LoginFormProps) => {
                         type="email"
                         placeholder="メールアドレス"
                         value={email()}
-                        onInput={(e) => setEmail(e.currentTarget.value)}
+                        onInput={(e) => handleInput("email", setEmail, e.currentTarget.value)}
+                        onBlur={() => validateField("email")}
                         error={errors().email}
                     />
 
@@ -93,7 +120,8 @@ export const LoginForm = (props: LoginFormProps) => {
                                 type={showPassword() ? "text" : "password"}
                                 placeholder="パスワード"
                                 value={password()}
-                                onInput={(e) => setPassword(e.currentTarget.value)}
+                                onInput={(e) => handleInput("password", setPassword, e.currentTarget.value)}
+                                onBlur={() => validateField("password")}
                                 pr="10"
                             />
                             <Box
@@ -103,12 +131,13 @@ export const LoginForm = (props: LoginFormProps) => {
                                 transform="translateY(-50%)"
                             >
                                 <IconButton
-                                    variant="ghost"
+                                    variant="plain"
                                     size="sm"
+                                    type="button"
                                     aria-label={showPassword() ? "パスワードを隠す" : "パスワードを表示"}
                                     onClick={() => setShowPassword(!showPassword())}
                                 >
-                                    {showPassword() ? <EyeOff size={18} /> : <Eye size={18} />}
+                                    {showPassword() ? <EyeOff /> : <Eye />}
                                 </IconButton>
                             </Box>
                         </Box>

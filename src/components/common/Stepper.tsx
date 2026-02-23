@@ -1,4 +1,3 @@
-/* Stepper コンポーネントの実装 */
 import { For, Show } from "solid-js";
 import { Check } from "lucide-solid";
 import { Box, Flex } from "styled-system/jsx";

@@ -4,6 +4,7 @@ import { createListCollection } from "@ark-ui/solid";
 import { Trash2 } from "lucide-solid";
 import { Box, Flex, HStack, styled } from "styled-system/jsx";
 import { IconButton } from "~/components/ui/icon-button";
+import { notify } from "~/components/ui/toast";
 import { CartItem } from "~/types";
 import { QuantitySelect } from "~/components/common/QuantitySelect";
 import { ConfirmDeleteModal } from "~/components/common/ConfirmDeleteModal";
@@ -33,6 +34,12 @@ export const CartItemCard = (props: CartItemCardProps) => {
     const unitText = createMemo(() => {
         return props.item.category === 'withShell' ? 'kg' : 'パック';
     });
+
+    const handleConfirmDelete = () => {
+        props.onRemove(props.item.id);
+        setShowDeleteModal(false);
+        notify.success("商品を削除しました");
+    };
 
     return (
         <Flex
@@ -141,7 +148,7 @@ export const CartItemCard = (props: CartItemCardProps) => {
                 open={showDeleteModal()}
                 targetName={props.item.title}
                 onOpenChange={setShowDeleteModal}
-                onConfirm={() => { props.onRemove(props.item.id); setShowDeleteModal(false); }}
+                onConfirm={handleConfirmDelete}
                 onCancel={() => setShowDeleteModal(false)}
             />
         </Flex>

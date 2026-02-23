@@ -1,11 +1,11 @@
-/* 新規登録フォームの実装（src/components/common/account/SignupForm.tsx） */
 import { createSignal, Show } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import { Box, Grid, VStack, styled } from "styled-system/jsx";
 import { Button } from "~/components/ui/button";
 import * as Checkbox from "~/components/ui/checkbox";
+import { notify } from "~/components/ui/toast";
 import { FormInput } from "~/components/common/FormInput";
-import { FormCombobox } from "~/components/common/FormCombobox";
+import { FormSelect } from "~/components/common/FormSelect";
 import { signupSchema, signupBaseSchema, type SignupInput } from "~/schemas/auth";
 import prefsData from "~/data/prefectures.json";
 import { ConfirmSignupModal } from "./ConfirmSignupModal";
@@ -14,7 +14,7 @@ interface SignupFormProps {
     cancelLink?: string;
 }
 
-// --- 都道府県データの定義 ---
+// 都道府県データの定義
 type Prefecture = { label: string; value: string };
 const prefectures = prefsData as Prefecture[];
 
@@ -22,7 +22,7 @@ export const SignupForm = (props: SignupFormProps) => {
     const navigate = useNavigate();
     const cancelLink = props.cancelLink ?? "/";
 
-    // --- フィールドの状態管理 ---
+    // フィールドの状態管理
     const [formData, setFormData] = createSignal<SignupInput>({
         email: "",
         password: "",
@@ -43,9 +43,12 @@ export const SignupForm = (props: SignupFormProps) => {
     const [errors, setErrors] = createSignal<Record<string, string>>({});
     const [showConfirmModal, setShowConfirmModal] = createSignal(false);
 
-    // 入力値更新用のヘルパー
+    // 入力値更新用のヘルパー（エラーがあれば即座に再検証）
     const updateField = (key: keyof SignupInput, value: string) => {
         setFormData({ ...formData(), [key]: value });
+        if (errors()[key]) {
+            validateField(key);
+        }
     };
 
     // フィールド単位のバリデーション（blur時）
@@ -95,6 +98,7 @@ export const SignupForm = (props: SignupFormProps) => {
     const handleConfirmUpdate = () => {
         // API送信などの登録処理をここに記述
         setShowConfirmModal(false);
+        notify.success("登録しました");
     };
 
     return (
@@ -196,9 +200,9 @@ export const SignupForm = (props: SignupFormProps) => {
                         showAsterisk
                     />
 
-                    <FormCombobox
+                    <FormSelect
                         label="都道府県"
-                        placeholder="都道府県を検索・選択"
+                        placeholder="都道府県を選択"
                         items={prefectures}
                         value={(() => {
                             const match = prefectures.find(p => p.label === formData().prefecture);
@@ -210,7 +214,6 @@ export const SignupForm = (props: SignupFormProps) => {
                         }}
                         error={errors().prefecture}
                         showAsterisk
-                        onBlur={() => validateField("prefecture")}
                     />
 
                     <FormInput
